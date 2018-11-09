@@ -65,7 +65,7 @@ function crawl() {
                         price = parseFloat($(el).text().match(/\d{1,3}\.\d{1,2}/g).join(" or "));
                         date = /\d+.\s\w+\s\d{1,4}/i.exec($(el));
 
-                        console.log(`On the ${date} the cheapest flight from ${departure} is at ${departureTime}, which arrives at ${arrival} airport at ${arrivalTime}, for the price of ${Math.min(price)} eur.`);
+                        console.log(`On the ${date}, the cheapest flight from ${departure} departs at ${departureTime}, which arrives at ${arrival} airport at ${arrivalTime}, for the price of ${Math.min(price)} eur.`);
                     });
                 } else {
                     console.log("The program failed to calculate");
