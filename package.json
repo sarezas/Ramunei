@@ -1,0 +1,15 @@
+{
+  "name": "web-spider",
+  "version": "0.0.1",
+  "description": "A simple JavaScript web crawler",
+  "main": "crawler3.js",
+  "author": "Sharis",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "cheerio": "^1.0.0-rc.2",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "url-parse": "^1.4.3"
+  }
+}
