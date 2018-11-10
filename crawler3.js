@@ -36,7 +36,6 @@ function crawl() {
     var cheerio = require("cheerio");
     var async = require("async");
     var queue = [];
-    var priceList = [];
 
     for (let i = 0; i < pool.length; i++) {
         queue.push(function () {
@@ -51,22 +50,27 @@ function crawl() {
                     var arrival = "";
                     var departureTime = []
                     var arrivalTime = [];
-                    var price = [];
+                    var priceMatch = "";
+                    // console.log(typeof(price));
                     var date = "";
 
                     $('#avaday-outbound-result').each(function (i, el) {
-                        departure = /oslo-\w+/gi.exec($('.avadaytable'));
-                        arrival = /riga/gi.exec($(el));
-                        // split indexes for arrival and departure times
-                        var body = $('.avadaytable').text();
-                        var result = body.match(/\d{1,2}\:\d{1,2}/gi);
-                        departureTime = result[0];
-                        arrivalTime = result[1];
-                        price = parseFloat($(el).text().match(/\d{1,3}\.\d{1,2}/g).join(" or "));
-                        date = /\d+.\s\w+\s\d{1,4}/i.exec($(el));
+                    departure = /oslo-\w+/gi.exec($('.avadaytable'));
+                    arrival = /riga/gi.exec($(el));
+                    // split indexes for arrival and departure times
+                    var body = $('.avadaytable').text();
+                    var result = body.match(/\d{1,2}\:\d{1,2}/gi);
+                    departureTime = result[0];
+                    arrivalTime = result[1];
+                    priceMatch = $('.avadaytable').text().match(/\d{1,3}\.\d{1,2}/g);
+                    // $('.avadaytable').search(priceMatch);
+                    var priceArray = priceMatch.map(function(v){return +v});
+                    // var lowestPrice = Math.min.apply(null, priceArray);
+                    var lowestPrice = Math.min(...priceArray);
+                    date = /\d+.\s\w+\s\d{1,4}/i.exec($(el));
 
-                        console.log(`On the ${date}, the cheapest flight from ${departure} departs at ${departureTime}, which arrives at ${arrival} airport at ${arrivalTime}, for the price of ${Math.min(price)} eur.`);
-                    });
+                    console.log(`On the ${date}, the cheapest flight from ${departure} departs at ${departureTime}, which arrives at ${arrival} airport at ${arrivalTime}, for the price of ${lowestPrice} GBP.`);
+                }) 
                 } else {
                     console.log("The program failed to calculate");
                 };
